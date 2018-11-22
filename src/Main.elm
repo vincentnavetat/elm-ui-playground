@@ -109,6 +109,11 @@ add1 model =
 -- ---------------------------
 
 
+colorBorder : Color
+colorBorder =
+    rgba255 33 34 36 0.15
+
+
 view : Model -> Html Msg
 view model =
     Element.layout []
@@ -121,6 +126,7 @@ modalOverlay =
         [ width fill
         , height fill
         , Background.color (rgba255 33 34 36 0.65)
+        , clip
         ]
         [ modal
         ]
@@ -133,6 +139,11 @@ modal =
         , width (px 640)
         , centerX
         , centerY
+        , Border.rounded 3
+        , height
+            (fill
+                |> maximum 500
+            )
         ]
         [ modalHeader
         , modalBody
@@ -143,33 +154,71 @@ modal =
 modalHeader : Element msg
 modalHeader =
     el
-        []
-        (text "Modal header")
+        [ paddingXY 24 0
+        , height (px 64)
+        , Border.color colorBorder
+        , Border.widthEach { bottom = 1, left = 0, right = 0, top = 0 }
+        , width fill
+        ]
+        (el
+            [ centerY, Font.bold ]
+            (text "Modal header")
+        )
 
 
 modalBody : Element msg
 modalBody =
     el
-        []
-        (text "Modal body")
+        [ padding 24
+        , height fill
+        , width fill
+        , scrollbarY
+        ]
+        (Element.textColumn []
+            [ Element.paragraph
+                []
+                [ text "All modals have a fixed width of 640px. A modal’s height is dynamic but not more than 640px, after which the content part of the modal will become vertically scrollabale. The confirmation action must always reinforce the title of the modal (i.e., Title: “Configure a new car” and confirmation action label: “Configure”). Scrollbar symbol should only be enabled if full height modal is being demonstrated. Design example is a native macOS webkit scrollbar, live version will be native to platform." ]
+            , Element.paragraph
+                []
+                [ text "All modals have a fixed width of 640px. A modal’s height is dynamic but not more than 640px, after which the content part of the modal will become vertically scrollabale. The confirmation action must always reinforce the title of the modal (i.e., Title: “Configure a new car” and confirmation action label: “Configure”). Scrollbar symbol should only be enabled if full height modal is being demonstrated. Design example is a native macOS webkit scrollbar, live version will be native to platform."
+                ]
+            , Element.paragraph
+                []
+                [ text "All modals have a fixed width of 640px. A modal’s height is dynamic but not more than 640px, after which the content part of the modal will become vertically scrollabale. The confirmation action must always reinforce the title of the modal (i.e., Title: “Configure a new car” and confirmation action label: “Configure”). Scrollbar symbol should only be enabled if full height modal is being demonstrated. Design example is a native macOS webkit scrollbar, live version will be native to platform."
+                ]
+            , Element.paragraph
+                []
+                [ text "All modals have a fixed width of 640px. A modal’s height is dynamic but not more than 640px, after which the content part of the modal will become vertically scrollabale. The confirmation action must always reinforce the title of the modal (i.e., Title: “Configure a new car” and confirmation action label: “Configure”). Scrollbar symbol should only be enabled if full height modal is being demonstrated. Design example is a native macOS webkit scrollbar, live version will be native to platform."
+                ]
+            ]
+        )
+
+
+button : String -> Element msg
+button copy =
+    el
+        [ Border.rounded 3
+        ]
+        (text copy)
 
 
 modalFooter : Element msg
 modalFooter =
-    el
-        []
-        (text "Modal footer")
-
-
-myElement : Element msg
-myElement =
-    el
-        [ Background.color (rgb255 240 0 245)
-        , Font.color (rgb255 255 255 255)
-        , Border.rounded 3
-        , padding 30
+    row
+        [ paddingXY 24 0
+        , height (px 80)
+        , Border.color colorBorder
+        , Border.widthEach { bottom = 0, left = 0, right = 0, top = 1 }
+        , width fill
+        , spaceEvenly
         ]
-        (text "stylish!")
+        [ el
+            [ centerY ]
+            (button "Cancel")
+        , el
+            [ centerY ]
+            (button "Confirm")
+        ]
 
 
 
