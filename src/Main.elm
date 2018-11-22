@@ -117,18 +117,48 @@ view model =
 
 modalOverlay : Element msg
 modalOverlay =
-    row [ width fill, height fill, centerX, centerY, Background.color (rgba255 33 34 36 0.65) ]
+    row
+        [ width fill
+        , height fill
+        , Background.color (rgba255 33 34 36 0.65)
+        ]
         [ modal
         ]
 
 
-
--- rgba(,,,0.65);
-
-
 modal : Element msg
 modal =
-    el [] (text "Modal body")
+    column
+        [ Background.color (rgb255 255 255 255)
+        , width (px 640)
+        , centerX
+        , centerY
+        ]
+        [ modalHeader
+        , modalBody
+        , modalFooter
+        ]
+
+
+modalHeader : Element msg
+modalHeader =
+    el
+        []
+        (text "Modal header")
+
+
+modalBody : Element msg
+modalBody =
+    el
+        []
+        (text "Modal body")
+
+
+modalFooter : Element msg
+modalFooter =
+    el
+        []
+        (text "Modal footer")
 
 
 myElement : Element msg
