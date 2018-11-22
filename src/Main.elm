@@ -2,7 +2,7 @@ port module Main exposing (Model, Msg(..), add1, init, main, toJs, update, view)
 
 import Browser
 import Browser.Navigation as Nav
-import Element exposing (Element, alignRight, centerY, el, fill, padding, rgb255, row, spacing, text, width)
+import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
@@ -112,16 +112,23 @@ add1 model =
 view : Model -> Html Msg
 view model =
     Element.layout []
-        myRowOfStuff
+        modalOverlay
 
 
-myRowOfStuff : Element msg
-myRowOfStuff =
-    row [ width fill, centerY, spacing 30 ]
-        [ myElement
-        , myElement
-        , el [ alignRight ] myElement
+modalOverlay : Element msg
+modalOverlay =
+    row [ width fill, height fill, centerX, centerY, Background.color (rgba255 33 34 36 0.65) ]
+        [ modal
         ]
+
+
+
+-- rgba(,,,0.65);
+
+
+modal : Element msg
+modal =
+    el [] (text "Modal body")
 
 
 myElement : Element msg
